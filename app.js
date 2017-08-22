@@ -5,13 +5,15 @@ function Product(productName, imageFilePath, productId) {
   this.productName = productName;
   this.imageFilePath = imageFilePath;
   this.productId = productId;
-  this.timesImageShown = 0;
-  this.timesImageClicked = 0;
+  this.shown = 0;
+  this.votes = 0;
   productArray.push(this);
 }
+
 //Global variables
 var productArray = [];
 var lastThreeImgs = [];
+var maxClicks = 25;
 
 //newly created arrays replacing code block immediately below
 var productName = ['bag', 'banbana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dogDuck', 'dragon', 'pen', 'petSweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'waterCan', 'wine-Glass'];
@@ -22,28 +24,6 @@ var productId = ['bag', 'banbana', 'bathroom', 'boots', 'breakfast', 'bubblegum'
 for (var i = 0; i < imageFilePath.length; i++) {
   new Product(productName[i], imageFilePath[i], productId[i]);
 }
-
-// var Bag = new Product('bag', 'imgs/bag.jpg', 0, 0);
-// var banana = new Product('banana', 'imgs/banana.jpg', 0, 0);
-// var bathroom = new Product('bathroom', 'imgs/bathroom.jpg', 0, 0);
-// var boots = new Product('boots', 'imgs/boots.jpg', 0, 0);
-// var breakfast = new Product('breakfast', 'imgs/breakfast.jpg', 0, 0);
-// var bubblegum = new Product('bubblegum', 'imgs/bubblegum.jpg', 0, 0);
-// var chair = new Product('chair', 'imgs/chair.jpg', 0, 0);
-// var cthulhu = new Product('cthulhu', 'imgs/cthulhu.jpg', 0, 0);
-// var dogDuck = new Product('dogDuck', 'imgs/dog-duck.jpg', 0, 0);
-// var dragon = new Product('dragon', 'imgs/dragon.jpg', 0, 0);
-// var pen = new Product('pen', 'imgs/pen.jpg', 0, 0);
-// var petSweep = new Product('petSweep', 'imgs/pet-sweep.jpg', 0, 0);
-// var scissors = new Product('scissors', 'imgs/scissors.jpg', 0, 0);
-// var shark = new Product('shark', 'imgs/shark.jpg', 0, 0);
-// var sweep = new Product('sweep', 'imgs/sweep.png', 0, 0);
-// var tauntaun = new Product('tauntaun', 'imgs/tauntaun.jpg', 0, 0);
-// var unicorn = new Product('unicorn', 'imgs/unicorn.jpg', 0, 0);
-// var usb = new Product('usb', 'imgs/usb.gif', 0, 0);
-// var waterCan = new Product('waterCan', 'imgs/water-can.jpg', 0, 0);
-// var wineGlass = new Product('wineGlass', 'imgs/wine-glass.jpg', 0, 0);
-//Renders the 3 randomly chosen images
 function renderThreeProducts() {
 
   //ONE
@@ -56,6 +36,7 @@ function renderThreeProducts() {
   }
   productOne.src = productArray[randomOne].imageFilePath;
   imageOne.appendChild(productOne);
+  productArray[randomOne].shown++;
   productOne.productId = productArray[randomOne].productId;
 
   //TWO
@@ -64,12 +45,12 @@ function renderThreeProducts() {
   var productTwo = document.createElement('img');
   var randomTwo = Math.floor(Math.random() * productArray.length);
   productTwo.src = productArray[randomTwo].imageFilePath;
-  imageTwo.appendChild(productTwo);
   while (randomOne === randomTwo || lastThreeImgs.includes(randomTwo)){
     randomTwo = Math.floor(Math.random() * productArray.length);
   }
   productTwo.src = productArray[randomTwo].imageFilePath;
   imageTwo.appendChild(productTwo);
+  productArray[randomTwo].shown++;
   productTwo.productId = productArray[randomTwo].productId;
 
   //THREE
@@ -82,6 +63,7 @@ function renderThreeProducts() {
   }
   productThree.src = productArray[randomThree].imageFilePath;
   imageThree.appendChild(productThree);
+  productArray[randomThree].shown++;
   productThree.productId = productArray[randomThree].productId;
 
   lastThreeImgs = [];
@@ -91,19 +73,19 @@ function renderThreeProducts() {
   productArray[randomThree].displayed += 1;
 };
 renderThreeProducts();
-//
-//below this point is rough code, practicing different theories, thats why its not yet deleted.
-//
-//   var imageOneRender = document.getElementById('imageSpotOne');
-// imageOneRender.addEventListener('load', clickTally);
-//
-//
-//
-//
-//
-//
-//
-function imageShownTally() {
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////WORKING CODE ABOVE HERE////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+var imageOneViewed = document.getElementById('imageSpotOne');
+imageOneViewed.addEventListener('click', clickedTally);
+var imageTwoViewed = document.getElementById('imageSpotTwo');
+imageTwoViewed.addEventListener('click', clickedTally);
+var imageThreeViewed = document.getElementById('imageSpotThree');
+imageThreeViewed.addEventListener('click', clickedTally);
+
+function clickedTally(event) {
+  var voteCounter = 0;
   for (var i = 0; i < productArray.length; i++) {
     if (productArray[i].productId === event.target.productId && voteCounter < maxClicks) {
       productArray[i].votes++;
@@ -123,32 +105,24 @@ function imageShownTally() {
     }
   }
 };
-// //   var imageTwoRender = document.getElementById('imageSpotTwo');
-//   var imageThreeRender = document.getElementById('imageSpotThree');
-//   // if productX is displayed, productXTally++;
-//  row.appendChild()
-// };
-// imageTwoRender.addEventListener('load', clickTally);
-// imageThreeRender.addEventListener('load', clickTally);
-//
-// function clickTally() {
-//   var imageOneSelection = document.getElementById('imageSpotOne');
-//   var imageTwoSelection = document.getElementById('imageSpotTwo');
-//   var imageThreeSelection = document.getElementById('imageSpotThree');
-//   // if productX is clicked, productXTally++;
-// };
-// imageOneSelection.addEventListener('click', imageShownTally);
-// imageTwoSelection.addEventListener('click', imageShownTally);
-// imageThreeSelection.addEventListener('click', imageShownTally);
-//
-//   totalClicks++;
-//   var targetId = whichImage.target.getAttribute('productId');
-//   for (productArray = 0; productArray < 25; productArray++) {
-//     if #################################
-//       #############################.countClicks++;
-//     }
+// totalClicks++;
+// var targetId = whichImage.target.getAttribute('productId');
+// for (productArray = 0; productArray < 25; productArray++) {
+//   if #################################
+//     #############################.countClicks++;
 //   }
 // }
+// }
+//
+
+// function clickTally() {
+//   var imageOneSelected = document.getElementById('imageSpotOne');
+//   var imageTwoSelected = document.getElementById('imageSpotTwo');
+//   var imageThreeSelected = document.getElementById('imageSpotThree');
+  // if productX is clicked, productXTally++;
+// };
+
+// row.appendChild()
 // // Count how many times each image is shown
 // when image is clicked
 // count click for that image
