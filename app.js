@@ -1,5 +1,5 @@
 'use strict';
-// array of all image files
+// array of all image files (currently working with not needing this, but too much to retype, so keep it for now.)
 // var productImageArray = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 
 //ImageDisplayField Constructor Function
@@ -10,7 +10,7 @@ function Product(productName, imageFilePath, timesImageShown, timesImageClicked)
   this.timesImageClicked = timesImageClicked;
   productArray.push(this);
 }
-
+//Global variables
 var productArray = [];
 var lastThreeImgs = [];
 
@@ -34,7 +34,7 @@ var unicorn = new Product('unicorn', 'imgs/unicorn.jpg', 0, 0);
 var usb = new Product('usb', 'imgs/usb.gif', 0, 0);
 var waterCan = new Product('waterCan', 'imgs/water-can.jpg', 0, 0);
 var wineGlass = new Product('wineGlass', 'imgs/wine-glass.jpg', 0, 0);
-
+//Renders the 3 randomly chosen images
 function renderThreeProducts() {
   var imageOne = document.getElementById('imageSpotOne');
   var productOne = document.createElement('img');
@@ -67,13 +67,36 @@ function renderThreeProducts() {
 };
 renderThreeProducts();
 //
+//below this point is rough code, practicing different theories, thats why its not yet deleted.
 //
 //
-// imageSpotOne.addEventListener('click', clickTally);
-// imageSpotTwo.addEventListener('click', clickTally);
-// imageSpotThree.addEventListener('click', clickTally);
+//
+//
+//
+//
+//
+//
+
+// function imageShownTally() {
+//   var imageOneRender = document.getElementById('imageSpotOne');
+//   var imageTwoRender = document.getElementById('imageSpotTwo');
+//   var imageThreeRender = document.getElementById('imageSpotThree');
+//   // if productX is displayed, productXTally++;
+// };
+// imageOneRender.addEventListener('load', clickTally);
+// imageTwoRender.addEventListener('load', clickTally);
+// imageThreeRender.addEventListener('load', clickTally);
 //
 // function clickTally() {
+//   var imageOneSelection = document.getElementById('imageSpotOne');
+//   var imageTwoSelection = document.getElementById('imageSpotTwo');
+//   var imageThreeSelection = document.getElementById('imageSpotThree');
+//   // if productX is clicked, productXTally++;
+// };
+// imageOneSelection.addEventListener('click', imageShownTally);
+// imageTwoSelection.addEventListener('click', imageShownTally);
+// imageThreeSelection.addEventListener('click', imageShownTally);
+
 //   totalClicks++;
 //   var targetId = whichImage.target.getAttribute('id');
 //   for (productArray = 0; productArray < 25; productArray++) {
