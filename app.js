@@ -39,6 +39,9 @@ function renderThreeProducts() {
   var imageOne = document.getElementById('imageSpotOne');
   var productOne = document.createElement('img');
   var randomOne = Math.floor(Math.random() * productArray.length);
+  while (lastThreeImgs.includes(randomOne)) {
+    randomOne = Math.floor(Math.random() * productArray.length);
+  }
   productOne.src = productArray[randomOne].imageFilePath;
   imageOne.appendChild(productOne);
   var imageTwo = document.getElementById('imageSpotTwo');
@@ -46,7 +49,7 @@ function renderThreeProducts() {
   productTwo.src = Bag.imageFilePath;
   imageTwo.appendChild(productTwo);
   var randomTwo = Math.floor(Math.random() * productArray.length);
-  while (randomOne === randomTwo) {
+  while (randomOne === randomTwo || lastThreeImgs.includes(randomTwo)){
     randomTwo = Math.floor(Math.random() * productArray.length);
   }
   productTwo.src = productArray[randomTwo].imageFilePath;
@@ -54,7 +57,7 @@ function renderThreeProducts() {
   var imageThree = document.getElementById('imageSpotThree');
   var productThree = document.createElement('img');
   var randomThree = Math.floor(Math.random() * productArray.length);
-  while (randomThree === randomTwo || randomThree === randomOne) {
+  while (randomThree === randomTwo || randomThree === randomOne || lastThreeImgs.includes(randomThree)) {
     randomThree = Math.floor(Math.random() * productArray.length);
   }
   productThree.src = productArray[randomThree].imageFilePath;
@@ -63,3 +66,25 @@ function renderThreeProducts() {
   lastThreeImgs.push(randomOne, randomTwo, randomThree);
 };
 renderThreeProducts();
+//
+//
+//
+// imageSpotOne.addEventListener('click', clickTally);
+// imageSpotTwo.addEventListener('click', clickTally);
+// imageSpotThree.addEventListener('click', clickTally);
+//
+// function clickTally() {
+//   totalClicks++;
+//   var targetId = whichImage.target.getAttribute('id');
+//   for (productArray = 0; productArray < 25; productArray++) {
+//     if #################################
+//       #############################.countClicks++;
+//     }
+//   }
+// }
+// Count how many times each image is shown
+// when image is clicked
+// count click for that image
+// remove eventlistener
+// reset images
+// repeat

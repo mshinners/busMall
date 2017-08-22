@@ -1,13 +1,16 @@
 
 #imageSpotOne img{
   height: 250px;
+  float: left;
 
 }
 
 #imageSpotTwo img{
   height: 250px;
+  float: left;
 }
 
 #imageSpotThree img{
   height: 250px;
+  float: left;
 }
