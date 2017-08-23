@@ -95,19 +95,61 @@ function clickedTally(event) {
         imageTwo.innerHTML = ' ';
         var imageThree = document.getElementById('imageSpotThree');
         imageThree.innerHTML = ' ';
-        var result = document.getElementById('listResult');
-        var unList = document.createElement('ul');
-        result.appendChild(unList);
-        for (var j = 0; j < productArray.length; j++) {
-          var list = document.createElement ('li');
-          if (productArray[j].shown > 0) {
-            list.innerText = (productArray[j].votes) + (' votes for the  ' + productArray[j].productName + '.');
-          } else {
-            list.innerText = productArray[j].productName + ' was not shown.';
-          }
-          unList.appendChild(list);
-        }
+        var barChart = new Chart (context, chartConfig);
       }
     }
   }
 }
+
+var canvas = document.getElementById('productChart');
+var context = canvas.getContext('2d');
+var chartConfig = {
+  type: 'bar',
+  data: {
+    labels: [product.productName],
+    datasets: [{
+      label: 'Number of Times Item was Seen.',
+      data: [product.shown[i]],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    }
+  }
+};
+
+
+
+        // var result = document.getElementById('listResult');
+        // var unList = document.createElement('ul');
+        // result.appendChild(unList);
+        // for (var j = 0; j < productArray.length; j++) {
+        //   var list = document.createElement ('li');
+        //   if (productArray[j].shown > 0) {
+        //     list.innerText = (productArray[j].votes) + (' votes for the  ' + productArray[j].productName + '.');
+        //   } else {
+        //     list.innerText = productArray[j].productName + ' was not shown.';
+        //   }
+        //   unList.appendChild(list);
