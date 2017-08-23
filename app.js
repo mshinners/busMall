@@ -1,42 +1,34 @@
 'use strict';
-// array of all image files (currently working with not needing this, but too much to retype, so keep it for now.)
-// var productImageArray = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'];
-
 //ImageDisplayField Constructor Function
-function Product(productName, imageFilePath, timesImageShown, timesImageClicked) {
+function Product(productName, imageFilePath, productId) {
   this.productName = productName;
   this.imageFilePath = imageFilePath;
-  this.timesImageShown = timesImageShown;
-  this.timesImageClicked = timesImageClicked;
+  this.productId = productId;
+  this.shown = 0;
+  this.votes = 0;
   productArray.push(this);
 }
+
 //Global variables
 var productArray = [];
 var lastThreeImgs = [];
+var maxClicks = 26;
+var voteCounter = 0;
 
-var Bag = new Product('bag', 'imgs/bag.jpg', 0, 0);
-var banana = new Product('banana', 'imgs/banana.jpg', 0, 0);
-var bathroom = new Product('bathroom', 'imgs/bathroom.jpg', 0, 0);
-var boots = new Product('boots', 'imgs/boots.jpg', 0, 0);
-var breakfast = new Product('breakfast', 'imgs/breakfast.jpg', 0, 0);
-var bubblegum = new Product('bubblegum', 'imgs/bubblegum.jpg', 0, 0);
-var chair = new Product('chair', 'imgs/chair.jpg', 0, 0);
-var cthulhu = new Product('cthulhu', 'imgs/cthulhu.jpg', 0, 0);
-var dogDuck = new Product('dogDuck', 'imgs/dog-duck.jpg', 0, 0);
-var dragon = new Product('dragon', 'imgs/dragon.jpg', 0, 0);
-var pen = new Product('pen', 'imgs/pen.jpg', 0, 0);
-var petSweep = new Product('petSweep', 'imgs/pet-sweep.jpg', 0, 0);
-var scissors = new Product('scissors', 'imgs/scissors.jpg', 0, 0);
-var shark = new Product('shark', 'imgs/shark.jpg', 0, 0);
-var sweep = new Product('sweep', 'imgs/sweep.png', 0, 0);
-var tauntaun = new Product('tauntaun', 'imgs/tauntaun.jpg', 0, 0);
-var unicorn = new Product('unicorn', 'imgs/unicorn.jpg', 0, 0);
-var usb = new Product('usb', 'imgs/usb.gif', 0, 0);
-var waterCan = new Product('waterCan', 'imgs/water-can.jpg', 0, 0);
-var wineGlass = new Product('wineGlass', 'imgs/wine-glass.jpg', 0, 0);
-//Renders the 3 randomly chosen images
+//newly created arrays replacing code block immediately below
+var productName = ['Bag', 'Banana Slicer', 'Bathroom Stand', 'Un-Boots', 'Breakfast', 'Meatball Bubblegum', 'Impossible Chair', 'Cthulhu Figurine', 'Dog Duckbill', 'Dragon Meat', 'Pen Cuttlery', 'Pet Sweeper', 'Pizza Scissors', 'Shark Sleeping Bag', 'Baby Sweeper', 'Taun-taun Sleeping Bag', 'Unicorn Meat', 'USB Tentacle', 'Watering Can', 'Wine Glass'];
+var imageFilePath = ['imgs/bag.jpg', 'imgs/banana.jpg', 'imgs/bathroom.jpg', 'imgs/boots.jpg', 'imgs/breakfast.jpg', 'imgs/bubblegum.jpg', 'imgs/chair.jpg', 'imgs/cthulhu.jpg', 'imgs/dog-duck.jpg', 'imgs/dragon.jpg', 'imgs/pen.jpg', 'imgs/scissors.jpg', 'imgs/shark.jpg', 'imgs/sweep.png', 'imgs/tauntaun.jpg', 'imgs/unicorn.jpg', 'imgs/usb.gif', 'imgs/water-can.jpg', 'imgs/wine-glass.jpg', ];
+var productId = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dogDuck', 'dragon', 'pen', 'petSweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'waterCan', 'wine-Glass'];
+
+//running the following list into a for loop for all products
+for (var i = 0; i < imageFilePath.length; i++) {
+  new Product(productName[i], imageFilePath[i], productId[i]);
+}
 function renderThreeProducts() {
+
+  //ONE
   var imageOne = document.getElementById('imageSpotOne');
+  imageOne.innerHTML = ' ';
   var productOne = document.createElement('img');
   var randomOne = Math.floor(Math.random() * productArray.length);
   while (lastThreeImgs.includes(randomOne)) {
@@ -44,17 +36,26 @@ function renderThreeProducts() {
   }
   productOne.src = productArray[randomOne].imageFilePath;
   imageOne.appendChild(productOne);
+  productArray[randomOne].shown++;
+  productOne.productId = productArray[randomOne].productId;
+
+  //TWO
   var imageTwo = document.getElementById('imageSpotTwo');
+  imageTwo.innerHTML = ' ';
   var productTwo = document.createElement('img');
-  productTwo.src = Bag.imageFilePath;
-  imageTwo.appendChild(productTwo);
   var randomTwo = Math.floor(Math.random() * productArray.length);
+  productTwo.src = productArray[randomTwo].imageFilePath;
   while (randomOne === randomTwo || lastThreeImgs.includes(randomTwo)){
     randomTwo = Math.floor(Math.random() * productArray.length);
   }
   productTwo.src = productArray[randomTwo].imageFilePath;
   imageTwo.appendChild(productTwo);
+  productArray[randomTwo].shown++;
+  productTwo.productId = productArray[randomTwo].productId;
+
+  //THREE
   var imageThree = document.getElementById('imageSpotThree');
+  imageThree.innerHTML = ' ';
   var productThree = document.createElement('img');
   var randomThree = Math.floor(Math.random() * productArray.length);
   while (randomThree === randomTwo || randomThree === randomOne || lastThreeImgs.includes(randomThree)) {
@@ -62,52 +63,51 @@ function renderThreeProducts() {
   }
   productThree.src = productArray[randomThree].imageFilePath;
   imageThree.appendChild(productThree);
+  productArray[randomThree].shown++;
+  productThree.productId = productArray[randomThree].productId;
+
   lastThreeImgs = [];
   lastThreeImgs.push(randomOne, randomTwo, randomThree);
+  productArray[randomOne].shown += 1;
+  productArray[randomTwo].shown += 1;
+  productArray[randomThree].shown += 1;
 };
 renderThreeProducts();
-//
-//below this point is rough code, practicing different theories, thats why its not yet deleted.
-//
-//
-//
-//
-//
-//
-//
-//
 
-// function imageShownTally() {
-//   var imageOneRender = document.getElementById('imageSpotOne');
-//   var imageTwoRender = document.getElementById('imageSpotTwo');
-//   var imageThreeRender = document.getElementById('imageSpotThree');
-//   // if productX is displayed, productXTally++;
-// };
-// imageOneRender.addEventListener('load', clickTally);
-// imageTwoRender.addEventListener('load', clickTally);
-// imageThreeRender.addEventListener('load', clickTally);
-//
-// function clickTally() {
-//   var imageOneSelection = document.getElementById('imageSpotOne');
-//   var imageTwoSelection = document.getElementById('imageSpotTwo');
-//   var imageThreeSelection = document.getElementById('imageSpotThree');
-//   // if productX is clicked, productXTally++;
-// };
-// imageOneSelection.addEventListener('click', imageShownTally);
-// imageTwoSelection.addEventListener('click', imageShownTally);
-// imageThreeSelection.addEventListener('click', imageShownTally);
+var imageOneClicked = document.getElementById('imageSpotOne');
+imageOneClicked.addEventListener('click', clickedTally);
+var imageTwoClicked = document.getElementById('imageSpotTwo');
+imageTwoClicked.addEventListener('click', clickedTally);
+var imageThreeClicked = document.getElementById('imageSpotThree');
+imageThreeClicked.addEventListener('click', clickedTally);
 
-//   totalClicks++;
-//   var targetId = whichImage.target.getAttribute('id');
-//   for (productArray = 0; productArray < 25; productArray++) {
-//     if #################################
-//       #############################.countClicks++;
-//     }
-//   }
-// }
-// Count how many times each image is shown
-// when image is clicked
-// count click for that image
-// remove eventlistener
-// reset images
-// repeat
+function clickedTally(event) {
+  if (voteCounter < maxClicks) {
+    for (var i = 0; i < productArray.length; i++) {
+      if (productArray[i].productId == event.target.productId) {
+        productArray[i].votes++;
+        voteCounter++;
+        console.log(voteCounter);
+        console.log(productArray[i]);
+        renderThreeProducts();
+      }
+    }
+  } else if (voteCounter === maxClicks) {
+    imageOneClicked.removeEventListener('click', clickedTally);
+    imageTwoClicked.removeEventListener('click', clickedTally);
+    imageThreeClicked.removeEventListener('click', clickedTally);
+    var result = document.getElementById('listResult');
+    var unList = document.createElement('ul');
+    result.appendChild(unList);
+    for (var j = 0; j < productArray.length; j++) {
+      var list = document.createElement ('li');
+      if (productArray[j].shown > 0) {
+        list.innerText = (productArray[j].votes) + (' votes for the  ' + productArray[j].productName + '.');
+      } else {
+        list.innerText = productArray[j].productName + ' was not shown.';
+      }
+      unList.appendChild(list);
+    }
+    // break; / productArray[j].shown * 100
+  }
+};
