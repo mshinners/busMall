@@ -108,6 +108,6 @@ function clickedTally(event) {
       }
       unList.appendChild(list);
     }
-    // break; / productArray[j].shown * 100
+    // break;
   }
 };
