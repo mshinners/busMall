@@ -12,7 +12,7 @@ function Product(productName, imageFilePath, productId) {
 //Global variables
 var productArray = [];
 var lastThreeImgs = [];
-var maxClicks = 3;
+var maxClicks = 25;
 var voteCounter = 0;
 
 //newly created arrays replacing code block immediately below
@@ -100,16 +100,20 @@ function clickedTally(event) {
     }
   }
 }
-
+var tableData = [];
+for (var i = 0; i < productArray.length; i++) {
+  tableData.push(productArray[i].shown);
+}
 var canvas = document.getElementById('productChart');
 var context = canvas.getContext('2d');
 var chartConfig = {
   type: 'bar',
   data: {
-    labels: [product.productName],
+    labels: productName,
+
     datasets: [{
       label: 'Number of Times Item was Seen.',
-      data: [product.shown[i]],
+      data: tableData,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -139,8 +143,6 @@ var chartConfig = {
     }
   }
 };
-
-
 
         // var result = document.getElementById('listResult');
         // var unList = document.createElement('ul');
